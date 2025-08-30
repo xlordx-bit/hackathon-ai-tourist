@@ -3,6 +3,7 @@ import axios from "axios";
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import LoadingSpinner from './LoadingSpinner';
+import TouristMap from './TouristMap';
 
 const TouristDashboard = ({ onLogout }) => {
   const [wallet, setWallet] = useState(1000);
@@ -538,26 +539,12 @@ const TouristDashboard = ({ onLogout }) => {
               {currentLocation && (
                 <div className="mb-6">
                   <h3 className="font-semibold text-gray-700 mb-3">Interactive Map</h3>
-                  <div className="bg-gray-100 rounded-2xl p-4 h-64 flex items-center justify-center relative">
-                    {getMapUrl() ? (
-                      <img 
-                        src={getMapUrl()} 
-                        alt="Route Map" 
-                        className="w-full h-full object-cover rounded-xl shadow-lg"
-                        onError={(e) => {
-                          e.target.style.display = 'none';
-                          e.target.nextSibling.style.display = 'flex';
-                        }}
-                      />
-                    ) : null}
-                    <div className="hidden flex-col items-center justify-center text-gray-500 bg-white p-4 rounded-xl">
-                      <span className="text-4xl mb-2">🗺️</span>
-                      <p className="font-semibold">Interactive Map</p>
-                      <p className="text-sm">Current: {currentLocation.lat.toFixed(4)}, {currentLocation.lng.toFixed(4)}</p>
-                      {destination && (
-                        <p className="text-sm">Destination: {destination.lat.toFixed(4)}, {destination.lng.toFixed(4)}</p>
-                      )}
-                    </div>
+                  <div className="bg-gray-100 rounded-2xl p-4 h-96 flex items-center justify-center relative">
+                    <TouristMap 
+                      currentLocation={currentLocation}
+                      destination={destination}
+                      routePath={routePath}
+                    />
                   </div>
                 </div>
               )}
